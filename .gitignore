@@ -1,0 +1,9 @@
+*.png
+*.jpg
+*.jpeg
+venv/
+images/
+venv/
+models/
+__pycache__/
+*.zip

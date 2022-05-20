@@ -1,0 +1,35 @@
+<html>
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <title>Pi Video Surveillance</title>
+  </head>
+  <body>
+    <h1>Video</h1>
+    <img style="top: 100; left: 200;" src="{{ url_for('video_feed') }}" width="800" height="600">
+    <!-- <a href="{{ url_for('capture') }}">Capture</a> -->
+    <button type="button" id="capture_button">Capture</button>
+    <button type="button" id="detect_button">Start Detection</button>
+
+    <script>
+      $("#capture_button").on('click', function() {
+        $.ajax({
+          type : "GET",
+          url : "/capture",
+          success : function(data) {
+            alert(data);
+          }
+        })
+      })
+
+      $("#detect_button").on('click', function() {
+        $.ajax({
+          type : "GET",
+          url : "/detect",
+          success : function(data) {
+            console.log(data)
+          }
+        })
+      })
+    </script>
+  </body>
+</html>
