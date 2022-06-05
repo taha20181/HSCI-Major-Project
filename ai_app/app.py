@@ -7,6 +7,7 @@ import imutils
 
 # Tensorflow model for ASL Alphabets classification
 model = load_model('models\\29032022.model')
+# model = load_model('models\\ASL_WORDS_VGG16_images.model')
 print(model)
 
 # capture = cv2.VideoCapture(0)
@@ -52,6 +53,58 @@ classes = ['A',
  'nothing',
  'space']
 
+# classes = ['1',
+#     '3',
+#     '4',
+#     '5',
+#     '7',
+#     '8',
+#     '9',
+#     'A',
+#     'B',
+#     'Baby',
+#     'Brother',
+#     'C',
+#     'D',
+#     'Dont_like',
+#     'E',
+#     'F',
+#     'Friend',
+#     'G',
+#     'H',
+#     'Help',
+#     'House',
+#     'I',
+#     'J',
+#     'K',
+#     'L',
+#     'Like',
+#     'Love',
+#     'M',
+#     'Make',
+#     'More',
+#     'N',
+#     'Name',
+#     'No',
+#     'O_OR_0',
+#     'P',
+#     'Pay',
+#     'Play',
+#     'Q',
+#     'R',
+#     'S',
+#     'Stop',
+#     'T',
+#     'U',
+#     'V_OR_2',
+#     'W_OR_6',
+#     'With',
+#     'X',
+#     'Y',
+#     'Yes',
+#     'Z',
+#     'nothing']
+
 # def prepare(filepath):
 #     image = cv2.imdecode(np.fromfile(filepath, dtype=np.uint8), cv2.IMREAD_UNCHANGED)
 #     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -73,7 +126,7 @@ def process(frame):
     rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     hand_results = hands.process(rgb_frame)
     face_results = face.process(frame)
-    cv2.imwrite('images/temp.jpg', frame)
+    # cv2.imwrite('images/temp.jpg', frame)
     # print("Face Landmarks =>", face_results.multi_face_landmarks)
 
     # if face_results.multi_face_landmarks:

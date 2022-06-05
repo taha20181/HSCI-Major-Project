@@ -30,6 +30,7 @@ class VideoCamera(object):
 
     def capture(self):
         print("Capturing now...")
-        cv2.imwrite("capture.jpg", self.image)
+        cv2.imwrite("images\capture.jpg", self.image)
+
 
         return True

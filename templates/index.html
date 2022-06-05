@@ -1,35 +1,70 @@
-<html>
-  <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <title>Pi Video Surveillance</title>
-  </head>
-  <body>
-    <h1>Video</h1>
-    <img style="top: 100; left: 200;" src="{{ url_for('video_feed') }}" width="800" height="600">
-    <!-- <a href="{{ url_for('capture') }}">Capture</a> -->
-    <button type="button" id="capture_button">Capture</button>
-    <button type="button" id="detect_button">Start Detection</button>
+{% extends "base_template.html" %}
 
-    <script>
-      $("#capture_button").on('click', function() {
-        $.ajax({
-          type : "GET",
-          url : "/capture",
-          success : function(data) {
-            alert(data);
-          }
-        })
-      })
+{% block title %} Home {% endblock %}
 
-      $("#detect_button").on('click', function() {
-        $.ajax({
-          type : "GET",
-          url : "/detect",
-          success : function(data) {
-            console.log(data)
-          }
-        })
-      })
-    </script>
-  </body>
-</html>
+{% block links %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<style>
+  .title {
+    font-family: "Roboto Slab", "Times New Roman", serif;
+    font-weight: 900;
+    font-size: 6em;
+    color: #572479;
+  }
+
+  .checked {
+    color: orange;
+  }
+</style>
+
+{% endblock %}
+{% block main %}
+
+<div class="container overflow-hidden pt-4">
+  <div class="row">
+    <div class="col">
+      <!-- <div class="d-flex"> -->
+        <!-- <div class="card" style="width: 35rem;"> -->
+        <div class="card" style="width: 60rem;" class="d-block w-100">
+          <div class="card-body">
+            <img class="d-block w-100" src="{{ url_for('video_feed') }}" width="800"
+              height="650">
+            <!-- <a href="{{ url_for('capture') }}">Capture</a> -->
+            
+          </div>
+        </div>
+      <!-- </div> -->
+    </div>
+    <div class="col pt-5 mt-5 pl-5">
+      <button type="button" id="capture_button">Capture</button>
+      <button type="button" id="detect_button">Start Detection</button>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+{% block script %}
+<script>
+  $("#capture_button").on('click', function () {
+    $.ajax({
+      type: "GET",
+      url: "/capture",
+      success: function (data) {
+        alert(data);
+      }
+    })
+  })
+
+  $("#detect_button").on('click', function () {
+    $.ajax({
+      type: "GET",
+      url: "/detect",
+      success: function (data) {
+        console.log(data)
+      }
+    })
+  })
+</script>
+{% endblock %}

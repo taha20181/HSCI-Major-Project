@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport" />
+
+    <!-- Bootstrap CSS -->
+    <link href="{{url_for('static',filename='assets/css/bootstrap.min.css')}}" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" rel="stylesheet">
+
+    {% block links %} {% endblock %}
+    <!-- Custom CSS -->
+    <link href="{{url_for('static',filename='css/style.css')}}" rel="stylesheet" />
+
+    <title>HSCI | {% block title %} {% endblock %}</title>
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+
+</head>
+
+<body class="light-custom-bgcolor">
+    <!-- Navbar -->
+    {% include 'navbar.html' %}
+    <!-- End Navbar -->
+
+    <main>{% block main %}{% endblock %}</main>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- bootstrap.bundle.min.js contains both Popper.js and Bootstrap JS -->
+    
+    <script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/bootstrap.bundle.min.js') }}"></script>
+
+    {% block script %}{% endblock %}
+
+</body>
+
+</html>

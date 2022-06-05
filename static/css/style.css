@@ -1,0 +1,127 @@
+/* ################################# USER DEFINED CLASSES #################################### */
+
+.light-custom-bgcolor {
+  background: #ece9e6 !important; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #ffffff,
+    #ece9e6
+  ) !important; /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #ffffff,
+    #ece9e6
+  ) !important; /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.nav-dark-bgcolor {
+  background: #141e30 !important; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #243b55,
+    #141e30
+  ) !important; /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #243b55,
+    #141e30
+  ) !important; /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.custom-lr-border {
+  border-left-color: #ffffff;
+  border-right-color: #ece9e6;
+}
+
+.card-img img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+img {
+  vertical-align: middle;
+  border-style: none;
+}
+
+.card-img {
+  height: 175px;
+  border: 1px solid #000;
+  padding: 5px;
+}
+
+.card-img {
+  width: 100%;
+  border-radius: calc(0.25rem - 1px);
+}
+
+.enlarged-img {
+  height: 600px;
+  width: 400px;
+}
+
+.zoomed-img > img {
+  width: 100%;
+}
+
+
+.rotate-img-90 {  
+  -webkit-transform:rotate(90deg);  
+  -moz-transform: rotate(90deg);  
+  -ms-transform: rotate(90deg);  
+  -o-transform: rotate(90deg);  
+  transform: rotate(90deg);  
+}  
+
+.btn.nav-color:hover {
+  color: #ffffff !important;
+}
+
+*,
+::after,
+::before {
+  box-sizing: border-box;
+}
+
+.nav-color {
+  background-color: #572479;
+  color: #ffffff;
+}
+
+.custom-brand-color {
+  color: #572479;
+}
+
+.custom-alert-purple {
+  background-color: #e0cffc !important;
+}
+
+.custom-success {
+  background-color: #d1e7dd !important;
+}
+
+.custom-warning {
+  background-color: #fff3cd !important;
+}
+
+.custom-danger {
+  background-color: #f8d7da !important;
+}
+
+
+tr > td {
+  font-size: smaller;
+  padding: 10px;
+  font-weight: 400;
+}
+
+tr.clickable-row > td {
+  padding: 8px;
+}
+
+.item-img{
+  cursor: pointer;
+}
+
+.no-border {
+  border: none !important;
+}
