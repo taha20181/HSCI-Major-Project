@@ -7,3 +7,8 @@ venv/
 models/
 __pycache__/
 *.zip
+ASL_Sign/
+*.avi
+*.mp4
+*.webm
+gifs/
