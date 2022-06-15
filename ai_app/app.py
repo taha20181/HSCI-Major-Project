@@ -6,8 +6,8 @@ from tensorflow.keras.models import load_model
 import imutils
 
 # Tensorflow model for ASL Alphabets classification
-# model = load_model('models\\29032022.model')
-model = load_model('models\\20052022_ASL_WORDS_VGG16_images')
+model = load_model('models\\29032022.model')
+# model = load_model('models\\20052022_ASL_WORDS_VGG16_images')
 print(model)
 
 # capture = cv2.VideoCapture(0)

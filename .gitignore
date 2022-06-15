@@ -12,3 +12,5 @@ ASL_Sign/
 *.mp4
 *.webm
 gifs/
+*.wav
+static/audios/*

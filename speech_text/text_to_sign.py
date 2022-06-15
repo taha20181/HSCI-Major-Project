@@ -14,6 +14,7 @@ global sequence
 
 sequence = []
 def search(string):
+    print(string)
     with open("speech_text\\text_to_sign.txt", 'r') as file:
         file_content = file.read()
 
@@ -26,7 +27,7 @@ def search(string):
             sequence.append(temp)
         except:
             print(word)
-            splitted_word = word.split("")
+            splitted_word = list(word)
 
             search(splitted_word)
 
@@ -37,7 +38,7 @@ def search(string):
 def merge_videofiles(sequence):
     try:
         final_clip = concatenate_videoclips(sequence)
-        final_clip.write_videofile("final.mp4")
+        final_clip.write_videofile("static/final.mp4")
 
         return "Video saved..."
     except:
