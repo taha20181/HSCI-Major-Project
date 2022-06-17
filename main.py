@@ -95,19 +95,17 @@ def video_feed():
 
 @app.route("/receive", methods=['POST'])
 def receive():
-    files = request.files
+    files = request.form
     print(files)
-    file = files.get('file')
-    print(type(file))
-    with open(os.path.abspath(f'static/audios/test.wav'), 'wb') as f:
-        print(type(file.read()))
-        f.write(file.read())
+    text = files.get('text')
+    print(type(text))
+    # with open(os.path.abspath(f'test.wav'), 'wb') as f:
+    #     f.write(file.read())
     
-    temp = convert_audio('static/audios/test.wav')
-    print(temp)
-    # text = speech_to_text('static/audios/test.mp3')
+
+    # text = speech_to_text('static/audios/test.wav')
     # print(text)
-    text = "what your name"
+    # text = "what your name"
     arr = search(text.split(" "))
     merge_videofiles(arr)
 
@@ -115,18 +113,6 @@ def receive():
     # response.headers.add('Access-Control-Allow-Origin', '*')
 
     return "True"
-
-
-@app.route("/learn_asl", methods=['GET', 'POST'])
-def learn_asl():
-    return render_template('learn_asl.html')
-
-
-@app.route("/learn_asl/<str:word>")
-def learn_asl_word():
-    arguments = request.args()
-
-    res = search(arguments)
 
 
 if __name__ == '__main__':

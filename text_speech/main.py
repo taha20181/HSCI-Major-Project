@@ -1,8 +1,8 @@
-from gtts import gTTS
+# from gtts import gTTS
 import os
 import pyttsx3
 
-mytext = input("Type something : ")
+# mytext = input("Type something : ")
 
 # USING GTTS
 def gtts_speech(mytext):
@@ -19,3 +19,5 @@ def pytts_speech(mytext):
     engine = pyttsx3.init()
     engine.say(mytext)
     engine.runAndWait()
+
+# pytts_speech(mytext)

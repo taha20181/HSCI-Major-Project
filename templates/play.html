@@ -25,8 +25,23 @@
 {% block main %}
 
     <h1>Audio to Sign Language</h1>
+
+
+    <h2>JavaScript Speech to Text</h2>
+    <p>Click on the below button and speak something...</p>
+    <p><button type="button" onclick="runSpeechRecognition()">Speech to Text</button> &nbsp; <span id="action"></span></p>
+    <div id="output" class="hide"></div>
     
-    <div class="wrapper">
+    <section class="sound-clips">
+      
+      <video width="600" autoplay muted>
+        <source src="static\final.mp4" type="video/mp4">
+        <!-- <source src="project.ogg" type="video/ogg"> -->
+        Your browser does not support HTML video.
+      </video>
+      
+    </section>
+    <!-- <div class="wrapper">
       
       <section class="main-controls">
         <canvas class="visualizer" height="60px"></canvas>
@@ -36,19 +51,19 @@
         </div>
       </section>
       <hr>
-      <section class="sound-clips">
-        
-        <video width="600" autoplay muted>
-          <source src="static\final.mp4" type="video/mp4">
-          <!-- <source src="project.ogg" type="video/ogg"> -->
-          Your browser does not support HTML video.
-        </video>
-        
-      </section>
 
-    </div>
-    {% endblock %}
-
-    {% block script %}
+    </div> -->
+    <!-- <div id="controls">
+      <button id="recordButton">Record</button>
+      <button id="pauseButton" disabled>Pause</button>
+      <button id="stopButton" disabled>Stop</button>
+  </div>
+  <h3>Recordings</h3> -->
+  <!-- <ol id="recordingsList"></ol> -->
+  <!-- inserting these scripts at the end to be able to use all the elements in the DOM --> 
+  {% endblock %}
+  
+  {% block script %}
+    <!-- <script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script> -->
     <script src="../static/js/app.js"></script>
     {% endblock %}

@@ -4,11 +4,11 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.keras.models import load_model
 import imutils
+from text_speech.main import pytts_speech
 
 # Tensorflow model for ASL Alphabets classification
 model = load_model('models\\29032022.model')
 # model = load_model('models\\20052022_ASL_WORDS_VGG16_images')
-print(model)
 
 # capture = cv2.VideoCapture(0)
 
@@ -121,6 +121,7 @@ classes = ['A',
 
 
 def process(frame):
+    global current_pred, previous_pred
     # success, frame = capture.read()
     h, w, c = frame.shape
     rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -168,28 +169,36 @@ def process(frame):
                 image_to_detect = frame[y_min-40:y_max+40, x_min-40:x_max+40]
 
                 resized = cv2.resize(image_to_detect, (224, 224))
-                cv2.imwrite('images/test.jpg', resized)
+                # cv2.imwrite('images/test.jpg', resized)
 
-                image__ = cv2.imread("images/test.jpg")
-                reshaped = image__.reshape((1, 224, 224, 3))
+                # resized = cv2.imread("images/test.jpg")
+                reshaped = resized.reshape((1, 224, 224, 3))
+                cv2.flip(reshaped, 1)
 
-        #         mp_drawing.draw_landmarks(
-        #             frame,
-        #             hand_landmarks,
-        #             mp_hands.HAND_CONNECTIONS,
-        #             mp_drawing_styles.get_default_hand_landmarks_style(),
-        #             mp_drawing_styles.get_default_hand_connections_style()
-        #         )
+                mp_drawing.draw_landmarks(
+                    frame,
+                    hand_landmarks,
+                    mp_hands.HAND_CONNECTIONS,
+                    mp_drawing_styles.get_default_hand_landmarks_style(),
+                    mp_drawing_styles.get_default_hand_connections_style()
+                )
 
                 image_class = model.predict(reshaped)
                 category = np.argmax(image_class[0])
-                # print(classes[category])
+                current_pred = classes[category]
             except Exception as e:
                 print("[Exception] ====> ", e)
 
                 return frame
-    # # show the prediction on the frame
-        cv2.putText(frame, f'Text : {classes[category]}', (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,255), 2, cv2.LINE_AA)
+
+
+        cv2.putText(frame, f'Text : {current_pred}', (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,255), 2, cv2.LINE_AA)
+        if current_pred == previous_pred:
+            pass
+        else:
+            pytts_speech(current_pred)
+
+            previous_pred = current_pred
 
 
     # cv2.imshow("video", frame)
@@ -198,9 +207,4 @@ def process(frame):
     return frame
 
 
-# while(True):
-#     process(capture)
-
-
-# capture.release()
 cv2.destroyAllWindows()
