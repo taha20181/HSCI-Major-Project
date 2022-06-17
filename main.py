@@ -60,9 +60,12 @@ def convert_audio(path = None,
     )
 
 @app.route('/')
+def home():
+    return render_template('home.html')
+
+@app.route('/sign_to_text')
 def index():
     return render_template('index.html')
-
 
 @app.route('/audio_to_sign')
 def record():

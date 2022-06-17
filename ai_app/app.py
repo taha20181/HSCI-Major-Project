@@ -173,7 +173,7 @@ def process(frame):
 
                 # resized = cv2.imread("images/test.jpg")
                 reshaped = resized.reshape((1, 224, 224, 3))
-                cv2.flip(reshaped, 1)
+                # cv2.flip(reshaped, 1)
 
                 mp_drawing.draw_landmarks(
                     frame,
