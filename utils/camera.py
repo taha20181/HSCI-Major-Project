@@ -6,6 +6,7 @@ class VideoCamera(object):
     def __init__(self):
         self.video = cv2.VideoCapture(0)
         self.video.set(cv2.CAP_PROP_BUFFERSIZE, 2)
+        self.video.set(cv2.CAP_PROP_FPS, 10)
 
 
     def __del__(self):
@@ -21,12 +22,12 @@ class VideoCamera(object):
     def face_detector(self):
         success, self.image = self.video.read()
         try:
-            self.image = app.process(self.image)
+            self.image, self.value = app.process(self.image)
             ret, jpeg = cv2.imencode('.jpg', self.image)
-            return jpeg.tobytes()
+            return jpeg.tobytes(), self.value
         except:
             ret, jpeg = cv2.imencode('.jpg', self.image)
-            return jpeg.tobytes()
+            return jpeg.tobytes(), None
 
 
     def capture(self):

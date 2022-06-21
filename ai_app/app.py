@@ -7,8 +7,8 @@ import imutils
 from text_speech.main import pytts_speech
 
 # Tensorflow model for ASL Alphabets classification
-model = load_model('models\\29032022.model')
-# model = load_model('models\\20052022_ASL_WORDS_VGG16_images')
+# model = load_model('models\\29032022.model')
+model = load_model('models\\20052022_ASL_WORDS_VGG16_images')
 
 # capture = cv2.VideoCapture(0)
 
@@ -23,87 +23,87 @@ face = mp_face_mesh.FaceMesh(max_num_faces=1,
     min_detection_confidence=0.5,
     min_tracking_confidence=0.5)
 
-classes = ['A',
- 'B',
- 'C',
- 'D',
- 'E',
- 'F',
- 'G',
- 'H',
- 'I',
- 'J',
- 'K',
- 'L',
- 'M',
- 'N',
- 'O',
- 'P',
- 'Q',
- 'R',
- 'S',
- 'T',
- 'U',
- 'V',
- 'W',
- 'X',
- 'Y',
- 'Z',
- 'del',
- 'nothing',
- 'space']
+# classes = ['A',
+#  'B',
+#  'C',
+#  'D',
+#  'E',
+#  'F',
+#  'G',
+#  'H',
+#  'I',
+#  'J',
+#  'K',
+#  'L',
+#  'M',
+#  'N',
+#  'O',
+#  'P',
+#  'Q',
+#  'R',
+#  'S',
+#  'T',
+#  'U',
+#  'V',
+#  'W',
+#  'X',
+#  'Y',
+#  'Z',
+#  'del',
+#  'nothing',
+#  'space']
 
-# classes = ['1',
-#     '3',
-#     '4',
-#     '5',
-#     '7',
-#     '8',
-#     '9',
-#     'A',
-#     'B',
-#     'Baby',
-#     'Brother',
-#     'C',
-#     'D',
-#     'Dont_like',
-#     'E',
-#     'F',
-#     'Friend',
-#     'G',
-#     'H',
-#     'Help',
-#     'House',
-#     'I',
-#     'J',
-#     'K',
-#     'L',
-#     'Like',
-#     'Love',
-#     'M',
-#     'Make',
-#     'More',
-#     'N',
-#     'Name',
-#     'No',
-#     'O_OR_0',
-#     'P',
-#     'Pay',
-#     'Play',
-#     'Q',
-#     'R',
-#     'S',
-#     'Stop',
-#     'T',
-#     'U',
-#     'V_OR_2',
-#     'W_OR_6',
-#     'With',
-#     'X',
-#     'Y',
-#     'Yes',
-#     'Z',
-#     'nothing']
+classes = ['1',
+    '3',
+    '4',
+    '5',
+    '7',
+    '8',
+    '9',
+    'A',
+    'B',
+    'Baby',
+    'Brother',
+    'C',
+    'D',
+    'Dont_like',
+    'E',
+    'F',
+    'Friend',
+    'G',
+    'H',
+    'Help',
+    'House',
+    'I',
+    'J',
+    'K',
+    'L',
+    'Like',
+    'Love',
+    'M',
+    'Make',
+    'More',
+    'N',
+    'Name',
+    'No',
+    'O_OR_0',
+    'P',
+    'Pay',
+    'Play',
+    'Q',
+    'R',
+    'S',
+    'Stop',
+    'T',
+    'U',
+    'V_OR_2',
+    'W_OR_6',
+    'With',
+    'X',
+    'Y',
+    'Yes',
+    'Z',
+    'nothing']
 
 # def prepare(filepath):
 #     image = cv2.imdecode(np.fromfile(filepath, dtype=np.uint8), cv2.IMREAD_UNCHANGED)
@@ -119,7 +119,7 @@ classes = ['A',
 #     category = np.argmax(prediction[0])
 #     return  classes[category]
 
-
+previous_pred = None
 def process(frame):
     global current_pred, previous_pred
     # success, frame = capture.read()
@@ -175,13 +175,13 @@ def process(frame):
                 reshaped = resized.reshape((1, 224, 224, 3))
                 # cv2.flip(reshaped, 1)
 
-                mp_drawing.draw_landmarks(
-                    frame,
-                    hand_landmarks,
-                    mp_hands.HAND_CONNECTIONS,
-                    mp_drawing_styles.get_default_hand_landmarks_style(),
-                    mp_drawing_styles.get_default_hand_connections_style()
-                )
+                # mp_drawing.draw_landmarks(
+                #     frame,
+                #     hand_landmarks,
+                #     mp_hands.HAND_CONNECTIONS,
+                #     mp_drawing_styles.get_default_hand_landmarks_style(),
+                #     mp_drawing_styles.get_default_hand_connections_style()
+                # )
 
                 image_class = model.predict(reshaped)
                 category = np.argmax(image_class[0])
@@ -192,10 +192,10 @@ def process(frame):
                 return frame
 
 
-        cv2.putText(frame, f'Text : {current_pred}', (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,255), 2, cv2.LINE_AA)
         if current_pred == previous_pred:
             pass
         else:
+            cv2.putText(frame, f'Text : {current_pred}', (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,255), 2, cv2.LINE_AA)
             pytts_speech(current_pred)
 
             previous_pred = current_pred
@@ -204,7 +204,7 @@ def process(frame):
     # cv2.imshow("video", frame)
     # if cv2.waitKey(1) == ord("q"):
     #     break
-    return frame
+    return frame, current_pred
 
 
 cv2.destroyAllWindows()

@@ -79,7 +79,7 @@ def gen():
 # @app.route('/detect')
 def detect():
     while True:
-        frame = video_stream.face_detector()
+        frame, predicted_value = video_stream.face_detector()
         yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
 @app.route('/capture')
@@ -99,16 +99,15 @@ def video_feed():
 @app.route("/receive", methods=['POST'])
 def receive():
     files = request.form
-    print(files)
     text = files.get('text')
-    print(type(text))
     # with open(os.path.abspath(f'test.wav'), 'wb') as f:
     #     f.write(file.read())
     
 
     # text = speech_to_text('static/audios/test.wav')
     # print(text)
-    # text = "what your name"
+    text = text.lower()
+    video_file_arr = []
     arr = search(text.split(" "))
     merge_videofiles(arr)
 

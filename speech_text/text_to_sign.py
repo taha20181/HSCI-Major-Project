@@ -2,8 +2,6 @@ import cv2
 import json
 from moviepy.editor import VideoFileClip, concatenate_videoclips
 
-global sequence
-
 # string = input().split(" ")
 
 # with open("text_to_sign.txt", 'r') as file:
@@ -11,10 +9,8 @@ global sequence
 
 #     decoded = json.loads(file_content)
 
-
-sequence = []
+# [how are you]
 def search(string):
-    print(string)
     with open("speech_text\\text_to_sign.txt", 'r') as file:
         file_content = file.read()
 
@@ -22,16 +18,21 @@ def search(string):
     
     for word in string:
         try:
+            print(word)
             path = decoded[word]
             temp = VideoFileClip(path)
-            sequence.append(temp)
+            video_file_arr.append(temp)
         except:
             print(word)
             splitted_word = list(word)
 
-            search(splitted_word)
+            y = search(splitted_word)
+            print("y ==========> ", y)
 
-    return sequence
+    x = video_file_arr[:]
+    print("x ===========> ", x)
+    video_file_arr.clear()
+    return x
 
 
 

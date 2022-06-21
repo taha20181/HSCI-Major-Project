@@ -270,6 +270,7 @@ function runSpeechRecognition() {
       recognition.onresult = function(event) {
         var transcript = event.results[0][0].transcript;
         var confidence = event.results[0][0].confidence;
+        console.log(transcript)
           var form_data = new FormData()
           form_data.append('text', transcript)
           // form_data.append('filename', 'test.wav')
