@@ -2,7 +2,7 @@
 
 // const record = document.querySelector('.record');
 // const stop = document.querySelector('.stop');
-// const soundClips = document.querySelector('.sound-clips');
+const soundClips = document.querySelector('.sound-clips');
 
 // // disable stop button while not recording
 
@@ -248,6 +248,7 @@
 
 
 function runSpeechRecognition() {
+  $("video").remove();
   // get output div reference
   var output = document.getElementById("output");
   // get action element reference
@@ -283,7 +284,21 @@ function runSpeechRecognition() {
             processData : false,
             data : form_data,
             success : function(data) {
-              $("video").show();
+                if (data['success'] == true) {
+                  const video = document.createElement('video');
+                  video.width = "600"
+                  video.controls = true
+                  video.muted = true
+                  video.autoplay = true
+                  const source = document.createElement('source');
+                  source.setAttribute('src', "../static/videos/" + transcript + ".mp4");
+                  source.setAttribute('type', "video/mp4");
+                  video.appendChild(source);
+                  soundClips.appendChild(video);
+                  // $("video").show();
+                } else {
+                  alert("Error")
+                }
               },
           })
           output.innerHTML = "<b>Text:</b> " + transcript + "<br/> <b>Confidence:</b> " + confidence*100+"%";

@@ -4,6 +4,7 @@ from speech_text.main import speech_to_text
 from speech_text.text_to_sign import search, merge_videofiles
 import os
 from werkzeug.utils import secure_filename
+import glob
 
 app = Flask(__name__)
 
@@ -13,51 +14,14 @@ global video_stream
 
 video_stream = VideoCamera()
 
-def convert_audio(path = None,
-                  convert = 'wav',
-                  stream = None):
-    '''
-        Convert MP3, OGG, FLV, WMA, ACC and MP4 audio / video files to WAV
-        audio file, by default, or any file type supported by FFmpeg
-        
-        :param str path: Path to a MP3, OGG, FLV, WMA, ACC or MP4 audio /
-         video file
 
-        :param str convert: Type to convert the input file to
+extra = ['is', 'are', 'the']
 
-        :param BufferedReader stream: Stream file
+def delete_mp4s():
+    files = glob.glob('static/videos/*')
+    for f in files:
+        os.remove(f)
 
-        :rtype: Dict
-        
-        :raises FileNotFoundError: Audio was not found
-    '''
-    error_message = None
-
-    try:
-        _audio = AudioSegment.from_file_using_temporary_files(stream) \
-            if stream else AudioSegment.from_file(path)
-    except FileNotFoundError as error:
-        error_message = 'Audio file was not found (convert audio)'
-
-        # logging.exception(error_message)
-
-        return dict(error=error_message)
-    except Exception as error:
-        error_message = 'Unexpected error when open audio file (convert audio)'
-
-        # logging.exception(error_message)
-
-        return dict(error=error_message)
-
-    audio_converted = _audio.export(format=convert)
-
-    audio_converted.seek(0)
-
-    return dict(
-        audio=_audio,
-        audio_converted=audio_converted,
-        error=error_message
-    )
 
 @app.route('/')
 def home():
@@ -78,9 +42,16 @@ def gen():
 
 # @app.route('/detect')
 def detect():
+    global predicted_value
+    print("hello")
     while True:
         frame, predicted_value = video_stream.face_detector()
         yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+
+
+def get_data():
+    while True:
+        yield (predicted_value)
 
 @app.route('/capture')
 def capture():
@@ -93,30 +64,39 @@ def capture():
 
 @app.route('/video_feed')
 def video_feed():
-    return Response(detect(),
-                    mimetype='multipart/x-mixed-replace; boundary=frame')
+    return Response(detect(), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+
+@app.route('/get_data')
+def get_predicted_value():
+    print("erer")
+    return Response(get_data(), data=predicted_value)
 
 @app.route("/receive", methods=['POST'])
 def receive():
-    files = request.form
-    text = files.get('text')
-    # with open(os.path.abspath(f'test.wav'), 'wb') as f:
-    #     f.write(file.read())
-    
+    try:
+        files = request.form
+        text = files.get('text')
+        for word in text.split(" "):
+            if word in extra:
+                index_of_word = text.index(word)
+                text.replace(word, "")
+        
+        print("text =====> ", text)
+        text = text.lower()
+        arr = search(text.split(" "))
+        merge_videofiles(arr, text)
 
-    # text = speech_to_text('static/audios/test.wav')
-    # print(text)
-    text = text.lower()
-    video_file_arr = []
-    arr = search(text.split(" "))
-    merge_videofiles(arr)
+        # response = jsonify("File received and saved!")
+        # response.headers.add('Access-Control-Allow-Origin', '*')
 
-    # response = jsonify("File received and saved!")
-    # response.headers.add('Access-Control-Allow-Origin', '*')
-
-    return "True"
+        return jsonify({'success' : True})
+    except Exception as e:
+        print("[Exception] ===========> ", e)
+        return jsonify({'success' : False})
 
 
 if __name__ == '__main__':
+    delete_mp4s()
     app.run(host='0.0.0.0', debug=True, threaded=True)
     # ecapture

@@ -10,36 +10,39 @@ from moviepy.editor import VideoFileClip, concatenate_videoclips
 #     decoded = json.loads(file_content)
 
 # [how are you]
+
+global video_file_arr
+
+
 def search(string):
+    video_file_arr = []
+    print(string, video_file_arr)
     with open("speech_text\\text_to_sign.txt", 'r') as file:
         file_content = file.read()
-
         decoded = json.loads(file_content)
     
     for word in string:
         try:
-            print(word)
             path = decoded[word]
+            print("hit =====> ", path)
             temp = VideoFileClip(path)
             video_file_arr.append(temp)
         except:
-            print(word)
+            print("miss")
             splitted_word = list(word)
 
             y = search(splitted_word)
-            print("y ==========> ", y)
+            print("y =======> ", y)
+    
 
-    x = video_file_arr[:]
-    print("x ===========> ", x)
-    video_file_arr.clear()
-    return x
+    return video_file_arr
 
 
 
-def merge_videofiles(sequence):
+def merge_videofiles(sequence, filename):
     try:
         final_clip = concatenate_videoclips(sequence)
-        final_clip.write_videofile("static/final.mp4")
+        final_clip.write_videofile(f"static/videos/{filename}.mp4")
 
         return "Video saved..."
     except:

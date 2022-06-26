@@ -5,7 +5,7 @@ from ai_app import app
 class VideoCamera(object):
     def __init__(self):
         self.video = cv2.VideoCapture(0)
-        self.video.set(cv2.CAP_PROP_BUFFERSIZE, 2)
+        self.video.set(cv2.CAP_PROP_BUFFERSIZE, 10)
         self.video.set(cv2.CAP_PROP_FPS, 10)
 
 
