@@ -14,8 +14,8 @@ from moviepy.editor import VideoFileClip, concatenate_videoclips
 global video_file_arr
 
 
+video_file_arr = []
 def search(string):
-    video_file_arr = []
     print(string, video_file_arr)
     with open("speech_text\\text_to_sign.txt", 'r') as file:
         file_content = file.read()
@@ -33,8 +33,8 @@ def search(string):
 
             y = search(splitted_word)
             print("y =======> ", y)
-    
 
+        # print(y, video_file_arr)
     return video_file_arr
 
 
